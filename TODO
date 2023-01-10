@@ -1,0 +1,29 @@
+Improve the keylistenner
+Improve the code
+Improve the forest arroud the map
+
+Aumentar variedade de inimigos
+
+Arrumar o depth, quando o player anda tambme muda o depth do inimigo
+
+Algoritimo pra modificar as cores do pixel de uma imagem
+
+
+
+
+public class FontX {
+	public String chars=""+"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public SpriteSheet fontsheet=new SpriteSheet("/fontsheet.png");
+	public void draw(String msg,int x,int y,Graphics g) {
+		msg=msg.toUpperCase();
+		for(int i=0;i<msg.length();i++) {
+			int ix=chars.indexOf(msg.charAt(i));
+			if(ix>=0) {
+				g.drawImage(fontsheet.getSprite(0+ix*11,0,11,11),60+i*16,60,16,16,null);
+			}
+		}
+	}
+}
+	font.draw("zz", 200, 200, g2);
+
+file size 350x200
