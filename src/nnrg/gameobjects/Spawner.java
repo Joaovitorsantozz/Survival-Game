@@ -5,9 +5,9 @@ import java.util.Random;
 
 import nnrg.gameobject.entitys.Enemy;
 import nnrg.interfaces.Tickable;
-import nnrg.main.FontStyle;
 import nnrg.main.Game;
-import nnrg.main.Text;
+import nnrg.main.others.FontStyle;
+import nnrg.main.others.Text;
 import nnrg.world.Depth;
 
 public class Spawner extends GameObject implements Tickable {

@@ -7,6 +7,8 @@ import nnrg.gameobject.entitys.Player;
 import nnrg.gameobjects.Camera;
 import nnrg.main.menu.Menu;
 import nnrg.main.menu.Upgradescreen;
+import nnrg.main.others.FontStyle;
+import nnrg.main.others.SpriteSheet;
 import nnrg.world.Level;
 
 public class HandlerGame {
@@ -18,9 +20,9 @@ public class HandlerGame {
 
 	public Menu menu;
 	public Upgradescreen screen;
-	public HandlerGame() {
+	public HandlerGame(Game game) {
 		spr = new SpriteSheet("/spritesheet.png");
-		level = new Level("/map.png", 0);
+		level = new Level("/map.png", 0,game);
 		cam = level.getCamera();
 		player = level.getPlayer();
 		screen = new Upgradescreen();

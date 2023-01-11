@@ -8,7 +8,8 @@ import javax.imageio.ImageIO;
 public class LoadImage {
 	private BufferedImage img;
 	private BufferedImage anim[];
-
+	private int[] pixels;
+	private int w,h;
 	public LoadImage(String dir) {
 		if(dir!=null) {
 			try {
@@ -17,6 +18,11 @@ public class LoadImage {
 				e.printStackTrace();
 			}
 		}
+		w=img.getWidth();
+		h=img.getHeight();
+		pixels=img.getRGB(0,0,w,h,null,0,w);
+		
+		img.flush();
 	}
 
 	public BufferedImage getImage() {
@@ -37,4 +43,11 @@ public class LoadImage {
 		}
 		return anim;
 	}
+	
+	public int[] getPixels() {
+		return pixels;
+
+	}
+	public int getW() {return w;}
+	public int getH() {return h;}
 }

@@ -13,11 +13,11 @@ import nnrg.gameobjects.particles.Damageparticle;
 import nnrg.interfaces.Living;
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
-import nnrg.main.Animator;
 import nnrg.main.Game;
 import nnrg.main.LoadImage;
-import nnrg.main.SpriteSheet;
 import nnrg.main.UI.Lifebar;
+import nnrg.main.others.Animator;
+import nnrg.main.others.SpriteSheet;
 import nnrg.world.Depth;
 
 public class Enemy extends GameObject implements Renderable, Tickable, Living {

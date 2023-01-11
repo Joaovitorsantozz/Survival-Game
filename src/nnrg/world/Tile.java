@@ -7,11 +7,12 @@ import java.awt.image.BufferedImage;
 import nnrg.gameobjects.GameObject;
 import nnrg.gameobjects.ID;
 import nnrg.interfaces.Renderable;
+import nnrg.main.Game;
 
 public class Tile extends GameObject implements Renderable {
 	private BufferedImage spr;
 	private TileType t;
-
+	private Game game;
 
 	public Tile(int x, int y, ID id, TileType tt) {
 		super(x, y, id);
@@ -38,6 +39,7 @@ public class Tile extends GameObject implements Renderable {
 		// TODO Auto-generated method stub
 		g.drawImage(spr,getX(),getY(),getWidth(),getHeight(),null);
 	}
+	
 
 	@Override
 	public Rectangle getBounds() {return new Rectangle(getX(),getY(),getWidth(),getHeight()); }

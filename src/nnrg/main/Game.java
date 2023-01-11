@@ -1,3 +1,5 @@
+
+
 package nnrg.main;
 
 import java.awt.Canvas;
@@ -10,7 +12,10 @@ import java.awt.image.BufferStrategy;
 import nnrg.gameobject.entitys.Player;
 import nnrg.gameobjects.GameObjectHandler;
 import nnrg.gameobjects.ID;
-import nnrg.gameobjects.Spawner;
+import nnrg.main.others.Clock;
+import nnrg.main.others.FontStyle;
+import nnrg.main.others.FontX;
+import nnrg.main.others.Text;
 
 public class Game extends Canvas implements Runnable {
 	public static GameObjectHandler handler;
@@ -25,14 +30,26 @@ public class Game extends Canvas implements Runnable {
 	public static InputHandler inpt;
 	public FontX font = new FontX();
 	private Windows wind;
+	
+	
+	
+	
+	
+	public Renderer render;
+	private Image image;
 	public Game() {
+		image=new Image("/teste.png");
+		wind=new Windows(this);
+		render=new Renderer(this);		
 		inpt = new InputHandler(this);
-		wind=new Windows(W, H, "LRG", this);
+		
+		//wind=new Windows(W, H, "LRG", this);
+
 		new FontStyle();
 		text = new Text(FontStyle.getFont(100, 1), "Wave ", Game.W / 2, Game.H / 2);
 		new Player(500, 500, ID.Player, handler, inpt);
 		handler = new GameObjectHandler();
-		handlergame = new HandlerGame();
+		handlergame = new HandlerGame(this);
 
 		style = new FontStyle();
 		clock = new Clock();
@@ -66,23 +83,27 @@ public class Game extends Canvas implements Runnable {
 			unprocessed += (now - lastTime) / nsPerTick;
 			lastTime = now;
 			boolean shouldRender = true;
+			tick();
 			while (unprocessed >= 1) {
 				ticks++;
-				tick();
+				
 				unprocessed -= 1;
 				shouldRender = true;
 			}
 
 			if (shouldRender) {
-				wind.clear();
-				frames++;
+				render.clear();
+				draw();
+				wind.update();
 				render();
+			
+				//quando chama o render a tela fica piscando
+				frames++;
 			}
 
 			if (System.currentTimeMillis() - lastTimer1 > 1000) {
 				lastTimer1 += 1000;
-				Frames = frames;
-				System.out.println(Frames);
+				System.out.println(frames);
 				frames = 0;
 				ticks = 0;
 			}
@@ -135,11 +156,17 @@ public class Game extends Canvas implements Runnable {
 
 		handlergame.renderNotAffect(g2);
 		g.drawImage(wind.getImage(),0,0,W,H,null);
+	
 		// Show images here ^
 		g.dispose();
 		bs.show();
 
 	}
-	
-	
+	public void draw() {
+		render.drawImage(image, 0, 0);
+	}
+	public Windows getWindows() {
+		return this.wind;
+	}
 }
+

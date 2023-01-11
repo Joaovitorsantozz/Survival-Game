@@ -1,4 +1,4 @@
-package nnrg.main;
+package nnrg.main.others;
 
 import java.awt.Font;
 import java.awt.FontFormatException;

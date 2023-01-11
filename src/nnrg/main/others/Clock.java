@@ -1,9 +1,10 @@
-package nnrg.main;
+package nnrg.main.others;
 
 import java.awt.Graphics;
 
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
+import nnrg.main.Game;
 
 public class Clock implements Tickable, Renderable {
 	private int minutes,seconds;

@@ -7,9 +7,9 @@ import java.util.Random;
 import nnrg.gameobjects.ID;
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
-import nnrg.main.FontStyle;
-import nnrg.main.FontX;
 import nnrg.main.Game;
+import nnrg.main.others.FontStyle;
+import nnrg.main.others.FontX;
 import nnrg.world.Depth;
 
 public class Damageparticle extends Particle implements Renderable,Tickable{

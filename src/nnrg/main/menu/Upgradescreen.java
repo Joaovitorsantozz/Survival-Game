@@ -3,9 +3,9 @@ package nnrg.main.menu;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import nnrg.main.FontX;
 import nnrg.main.Game;
 import nnrg.main.LoadImage;
+import nnrg.main.others.FontX;
 
 public class Upgradescreen extends Menu {
 	private BufferedImage opt = new LoadImage("/upg/upgscreen.png").getImage(),

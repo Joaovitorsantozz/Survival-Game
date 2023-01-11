@@ -1,5 +1,5 @@
 
-package nnrg.main;
+package nnrg.main.others;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

@@ -20,7 +20,7 @@ public class Level extends World {
 	private Player player;
 	private Camera camera;
 
-	public Level(String dir, int Offset) {
+	public Level(String dir, int Offset,Game game) {
 		super(dir);
 		offset = Offset;
 		setDir(dir);

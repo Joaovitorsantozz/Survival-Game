@@ -11,10 +11,10 @@ import nnrg.gameobjects.GameObjectHandler;
 import nnrg.gameobjects.ID;
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
-import nnrg.main.Animator;
 import nnrg.main.Game;
 import nnrg.main.InputHandler;
 import nnrg.main.LoadImage;
+import nnrg.main.others.Animator;
 import nnrg.world.Depth;
 
 public class Player extends GameObject implements Tickable, Renderable {
