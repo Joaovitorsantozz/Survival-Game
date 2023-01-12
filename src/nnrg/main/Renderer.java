@@ -22,7 +22,7 @@ private int pw,ph;
 	}
 	
 	public void setPixel(int x,int y, int value) {
-		if(x<0||x>=pw||y<0||y>=ph) {
+		if((x<0||x>=pw||y<0||y>=ph)) {
 			return;
 		}
 		p[x+y*pw]=value;

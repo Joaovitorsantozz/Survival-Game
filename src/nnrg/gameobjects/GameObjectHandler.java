@@ -16,7 +16,7 @@ public class GameObjectHandler {
 	public Player player;
 	
 		public void update() {
-		for (int i = 0; i < object.size(); i++) {
+		for (int i = 0, n =object.size(); i < n; i++) {
 			GameObject ee = object.get(i);
 			if (ee instanceof Tickable) {
 				((Tickable) ee).Update();
@@ -30,7 +30,7 @@ public class GameObjectHandler {
 	}
 
 	public void render(Graphics2D g) {
-		for (int i = 0; i < object.size(); i++) {
+		for (int i = 0, n =object.size(); i < n; i++) {
 			GameObject ee = object.get(i);
 			if (ee instanceof Renderable) {
 				((Renderable) ee).render(g);
@@ -44,7 +44,7 @@ public class GameObjectHandler {
 	}
 
 	public void resetKeys() {
-		for (int i = 0; i < object.size(); i++) {
+		for (int i = 0, n =object.size(); i < n; i++) {
 			GameObject ee = object.get(i);
 			if (ee.getId() == ID.Player) {
 				setUp(false);
@@ -70,7 +70,7 @@ public class GameObjectHandler {
 	}
 
 	public void DeleteByTag(ID id) {
-		for (int i = 0; i < object.size(); i++) {
+		for (int i = 0, n =object.size(); i < n; i++) {
 			if (object.get(i).getId() == id)
 				object.remove(object.get(i));
 		}

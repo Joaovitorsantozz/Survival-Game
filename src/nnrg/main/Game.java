@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable {
 		wind=new Windows(this);
 		render=new Renderer(this);		
 		inpt = new InputHandler(this);
-		
+	
 		//wind=new Windows(W, H, "LRG", this);
 
 		new FontStyle();
@@ -93,9 +93,10 @@ public class Game extends Canvas implements Runnable {
 
 			if (shouldRender) {
 				render.clear();
-				draw();
-				wind.update();
+				//wind.update();
+				//draw();
 				render();
+				
 			
 				//quando chama o render a tela fica piscando
 				frames++;
@@ -142,7 +143,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics2D g2 = (Graphics2D) g;
 
 		// Show images here v
-
+		g.drawImage(wind.getImage(),0,0,W,H,null);
 		g2.translate(-handlergame.cam.getX(), -handlergame.cam.getY());
 		handler.render(g2);
 		g2.translate(handlergame.cam.getX(), handlergame.cam.getY());
@@ -155,15 +156,15 @@ public class Game extends Canvas implements Runnable {
 		text.render(g2);
 
 		handlergame.renderNotAffect(g2);
-		g.drawImage(wind.getImage(),0,0,W,H,null);
 	
+		
 		// Show images here ^
 		g.dispose();
 		bs.show();
 
 	}
 	public void draw() {
-		render.drawImage(image, 0, 0);
+		render.drawImage(image, 300, 300);
 	}
 	public Windows getWindows() {
 		return this.wind;
