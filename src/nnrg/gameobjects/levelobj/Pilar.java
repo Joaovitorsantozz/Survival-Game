@@ -49,7 +49,15 @@ public class Pilar extends GameObject implements Renderable,Tickable{
 	public void setDepth() {
 		for(int i=0;i<Game.handler.object.size();i++) {
 			GameObject ee=Game.handler.object.get(i);
-			if(ee.getId()==ID.Player||ee.getId()==ID.Enemy) {
+			if(ee.getId()==ID.Player) {
+				if(ee.getY()<getY()+56) {
+					setDepth(ee.getDepth()+1);
+				}else if(ee.getY()>getY()) {
+					setDepth(Depth.MEDIUM);
+					ee.setDepth(Depth.HIGHT);
+				}
+				
+			}else if(ee.getId()==ID.Enemy) {
 				if(ee.getY()<getY()+56) {
 					setDepth(ee.getDepth()+1);
 				}else if(ee.getY()>getY()) {

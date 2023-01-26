@@ -17,6 +17,7 @@ public class Damageparticle extends Particle implements Renderable,Tickable{
 	public double xx,yy,zz;
 	public double xa,ya,za;
 	private String text;
+	public FontX font=new FontX();
 	public Damageparticle(int x, int y, ID id,String text) {
 		super(x, y, id);
 		// TODO Auto-generated constructor stub
@@ -37,13 +38,12 @@ public class Damageparticle extends Particle implements Renderable,Tickable{
 		// TODO Auto-generated method stub
 	
 	
-		new FontX().draw(text, x+8,y-(int)zz,g,25,24);
+		font.draw(text, x+8,y-(int)zz,g,15,11);
 	}
 
 	@Override
 	public void Update() {
 		// TODO Auto-generated method stub
-			
 		life++;
 		if(life>30)Game.handler.DeleteObject(this);
 		xx+=xa;
@@ -58,6 +58,9 @@ public class Damageparticle extends Particle implements Renderable,Tickable{
 		za-=0.2;
 		x=(int)xx;
 		y=(int)yy;
+		
+		
+	
 	}
 	
 }

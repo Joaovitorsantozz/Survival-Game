@@ -20,7 +20,7 @@ public class Level extends World {
 	private Player player;
 	private Camera camera;
 
-	public Level(String dir, int Offset,Game game) {
+	public Level(String dir, int Offset, Game game) {
 		super(dir);
 		offset = Offset;
 		setDir(dir);
@@ -33,12 +33,13 @@ public class Level extends World {
 				int pa = spr.getRGB(xx, yy);
 				spr.getRGB(0, 0, getWidth(), getHeight(), p, 0, getWidth());
 				BitMap(xx, yy, pa);
-				Game.handler.add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
+
 				if (pa == 0xFF0026FF) {
-					player = new Player(xx * 32, yy * 32, ID.Player, Game.handler,Game.inpt);
+					Game.handler.add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
+					player = new Player(xx * 32, yy * 32, ID.Player, Game.handler, Game.inpt);
 					Game.handler.add(player);
-					camera = new Camera(xx * 32, yy * 32);
-					Game.handler.add(new Spear(xx*32,yy*32,ID.Weapon,player));
+					camera = new Camera(xx * 32, yy * 32, player);
+					Game.handler.add(new Spear(xx * 32, yy * 32, ID.Weapon, player));
 				}
 				if (pa == 0xFF000000) {
 					Game.handler.add(new Tile(xx * 32, yy * 32, ID.Floor, TileType.Floor));
@@ -49,12 +50,16 @@ public class Level extends World {
 							Game.handler.add(new Tile(xx * 32, yy * 32, ID.Block, TileType.LeftFloor));
 							Game.handler.add(new Tile(xx * 32 + 32, yy * 32, ID.Floor, TileType.RightSdw));
 
-						} else if (getPixel(xx - 1, yy) == 0xFF000000) {
-							Game.handler.add(new Tile(xx * 32, yy * 32, ID.Block, TileType.RightFloor));
-							if (getPixel(xx - 2, yy - 2) != 0xFFFFFFFF && getPixel(xx - 2, yy - 3) != 0xFF00FF21)
-								Game.handler.add(new Tile(xx * 32 - 32, yy * 32, ID.Floor, TileType.LeftSdw));
 						}
-					}
+						if (getPixel(xx - 1, yy) == 0xFF000000) {
+							Game.handler.add(new Tile(xx * 32, yy * 32, ID.Block, TileType.RightFloor));
+
+							Game.handler.add(new Tile(xx * 32 - 32, yy * 32, ID.Floor, TileType.LeftSdw));
+
+						}
+
+					} 
+
 					if (getPixel(xx, yy + 1) < getHeight()) {
 						if (getPixel(xx, yy + 1) == 0xFF000000) {
 							Game.handler.add(new Tile(xx * 32, yy * 32, ID.Block, TileType.BottomFloor));
@@ -65,13 +70,13 @@ public class Level extends World {
 						}
 					}
 				}
-				if (pa == 0xFF00FF21) {
+				if (pa == 0xFF00FF21 || pa == 0xFFFFFF00) {
 					Game.handler.add(new Tile(xx * 32, yy * 32, ID.Block, TileType.Wall));
 					int pos = new Random().nextInt(100);
 					if (pos > 95) {
 						Game.handler.add(new Tree(xx * 32 - 96, yy * 32 - 96, ID.Tree));
 					} else if (pos > 90 && pos < 96) {
-						//Game.handler.add(new Bush(xx * 32 - 24, yy * 32 - 24, ID.Tree));
+						// Game.handler.add(new Bush(xx * 32 - 24, yy * 32 - 24, ID.Tree));
 					}
 				}
 
@@ -92,6 +97,7 @@ public class Level extends World {
 				}
 			}
 		}
+
 	}
 
 	public int getPixel(int x, int y) {

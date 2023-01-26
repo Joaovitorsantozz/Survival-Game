@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
+import java.util.Random;
 
 import nnrg.gameobjects.GameObject;
 import nnrg.gameobjects.GameObjectHandler;
 import nnrg.gameobjects.ID;
+import nnrg.gameobjects.particles.WalkParticle;
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
 import nnrg.main.Game;
@@ -23,13 +24,13 @@ public class Player extends GameObject implements Tickable, Renderable {
 	private BufferedImage spr = new LoadImage("/player2.png").getImage(), anim[], idle[],
 			attack = new LoadImage("/attacck.png").getImage(), attacking[];
 	Animator an, atck;
-	private float speed = 3f;
+	public float speed = 3f;
 	private boolean drawattack;
 
 	public InputHandler input;
 	public boolean rechargeStam, refillstam;
 	public int stamina = 80, maxStam = 80, count;
-	public int damage;
+	public int damage=2;
 	public BufferedImage stamin = new LoadImage("/upg/raio.png").getImage(),
 			emptystam = new LoadImage("/upg/emptyraio.png").getImage();
 
@@ -38,18 +39,17 @@ public class Player extends GameObject implements Tickable, Renderable {
 		// TODO Auto-generated constructor stub
 		this.hand = hand;
 		setDepth(Depth.HIGHT + 5);
-		setWidth(16 * 3);
+		setWidth(16 * 3); 
 		setHeight(16 * 3);
 		an = new Animator(20, 8);
-		atck = new Animator(5, 8);
+		atck = new Animator(0, 8);
 		anim = new LoadImage("/player2.png").CutHor(8, 0, 0, 16, 16, spr);
 		idle = new LoadImage("/player2.png").CutHor(8, 0, 16, 16, 16, spr);
 		attacking = new LoadImage("/attacck.png").CutHor(9, 0, 0, 8, 8, attack);
 		atck.setAnimation(attacking);
 		atck.setMaxFrames(10);
 		this.input = input;
-		
-		
+
 	}
 
 	@Override
@@ -66,6 +66,7 @@ public class Player extends GameObject implements Tickable, Renderable {
 			velX = -speed;
 		if (input.right.down)
 			velX = speed;
+
 		x += velX;
 		y += velY;
 
@@ -104,10 +105,18 @@ public class Player extends GameObject implements Tickable, Renderable {
 
 	private void setDir() {
 		if (Move()) {
-			if (velX < 0)
-				dir = -1;
-			if (velX > 0)
-				dir = 1;
+			if (new Random().nextInt(100) < 30) {
+				if (velX < 0) {
+					dir = -1;
+					Game.handler.add(new WalkParticle(getX()+10, getY() + getHeight() - 10, ID.Particle));
+				}
+				if (velX > 0) {
+					dir = 1;
+					Game.handler.add(new WalkParticle(getX()-20, getY() + getHeight() - 10, ID.Particle));
+				}
+
+			
+			}
 
 		}
 	}
@@ -129,7 +138,7 @@ public class Player extends GameObject implements Tickable, Renderable {
 			GameObject ee = hand.object.get(i);
 			if (ee.getId() == ID.Enemy) {
 				if (ee instanceof Enemy) {
-					damage(5, ee, getAttackBound());
+					damage(damage, ee, getAttackBound());
 				}
 			}
 		}
@@ -151,11 +160,10 @@ public class Player extends GameObject implements Tickable, Renderable {
 		} else if (getDir() != -1) {
 			drawDefaultTex(g, an.getAnimation());
 		}
-		
+
 		drawAttack(g);
 		renderpUI(g);
-		
-		
+
 	}
 
 	public void renderpUI(Graphics g) {
@@ -172,7 +180,7 @@ public class Player extends GameObject implements Tickable, Renderable {
 
 	private void drawAttack(Graphics g) {
 		if (drawattack) {
-
+			atck.setMaxFrames(5);
 			if (getDir() != 1) {
 				g.drawImage(atck.getAnimation(), getX() - 24, getY() - 24, getWidth() * 2 * -1, 96, null);
 			} else if (getDir() == 1) {
@@ -205,22 +213,5 @@ public class Player extends GameObject implements Tickable, Renderable {
 		}
 		return null;
 	}
-	
-	
-	public void init(BufferedImage img) {
-	
-		for(int xx=0;xx<img.getWidth();xx++) {
-			for (int yy=0;yy<img.getHeight();yy++) {
-				
-			}
-		}
-		
-	}
-	
-	
-	
-	
-	
-	
-	
+
 }

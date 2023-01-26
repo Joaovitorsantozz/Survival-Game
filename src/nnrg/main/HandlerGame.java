@@ -3,9 +3,9 @@ package nnrg.main;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import nnrg.gameobject.entitys.Player;
 import nnrg.gameobjects.Camera;
 import nnrg.main.menu.Menu;
+import nnrg.main.menu.Stats;
 import nnrg.main.menu.Upgradescreen;
 import nnrg.main.others.FontStyle;
 import nnrg.main.others.SpriteSheet;
@@ -14,23 +14,24 @@ import nnrg.world.Level;
 public class HandlerGame {
 	public static FontStyle font;
 	public static SpriteSheet spr, grassspr;
-	public Camera cam;
-	public static Level level;
-	public static Player player;
 
+	public static Level level;
+
+	public Camera cam;
 	public Menu menu;
 	public Upgradescreen screen;
-	public HandlerGame(Game game) {
+	public Stats stat;
+	public HandlerGame(Game game,InputHandler input) {
 		spr = new SpriteSheet("/spritesheet.png");
 		level = new Level("/map.png", 0,game);
-		cam = level.getCamera();
-		player = level.getPlayer();
-		screen = new Upgradescreen();
+		screen = new Upgradescreen(input);
+		cam=level.getCamera();
+		stat=new Stats(level.getPlayer());
 		
 	}
 
 	public void tick() {
-		setMenu(screen);
+		
 	}
 	public void setMenu(Menu mn) {
 		this.menu=mn;
@@ -41,6 +42,8 @@ public class HandlerGame {
 	public void renderNotAffect(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		if(menu!=null)menu.render(g);
+		
+		stat.render(g2);
 	}
 	
 	public Menu getMenu() {

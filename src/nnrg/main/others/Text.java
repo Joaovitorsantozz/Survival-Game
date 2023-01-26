@@ -13,7 +13,7 @@ public class Text {
 	public boolean decrease, increase = true, cld;
 	private int alpha;
 	private int cooldown;
-
+	
 	public Text(Font font, String text, int x, int y) {
 		if (font == null) {
 			this.font = new Font("Arial", Font.BOLD, 20);
@@ -30,11 +30,11 @@ public class Text {
 
 		if (decrease && alpha >= 1) {
 			increase = false;
-			alpha -= 2;
+			alpha -= 4;
 		}
-		if (increase && alpha < 254) {
+		if (increase && alpha < 252) {
 			decrease = false;
-			alpha += 2;
+			alpha += 4;
 			cld = true;
 		}
 
@@ -46,7 +46,7 @@ public class Text {
 				decrease = true;
 			}
 		}
-
+		
 	}
 
 	public void render(Graphics g) {

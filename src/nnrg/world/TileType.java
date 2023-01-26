@@ -11,8 +11,8 @@ public enum TileType {
 	public BufferedImage setImage(BufferedImage spr, Tile t) {
 		switch (this) {
 		case Floor:
-			int type = new Random().nextInt(30);
-			if (type <= 28) {
+			int type = new Random().nextInt(100);
+			if (type <= 90) {
 				spr = HandlerGame.spr.getSprite(0, 0, 16, 16);
 			} else if (type > 28) {
 				int type2 = new Random().nextInt(10);
@@ -55,7 +55,7 @@ public enum TileType {
 			spr = HandlerGame.spr.getSprite(0,48, 16, 16);
 			break;
 		case LeftSdw:
-			t.setDepth(Depth.MEDIUM);
+			t.setDepth(Depth.MEDIUM-2);
 			spr = HandlerGame.spr.getSprite(16,48, 16, 16);
 			break;
 		case StoneFloor:

@@ -11,10 +11,10 @@ import nnrg.main.others.Text;
 import nnrg.world.Depth;
 
 public class Spawner extends GameObject implements Tickable {
-	public int wave = 1;
-	public static int enemys;
-	public int spawntime = 60 * 10, tickCount;
-	private boolean canSpawn = true, spawned = false;
+	
+	public static int enemys,wave;
+	public int spawntime = 60 * 5, tickCount;
+	private boolean canSpawn = false, spawned = false, cancount;
 	private int enemyAtRound = 4;
 
 	public Spawner(int x, int y, ID id) {
@@ -33,24 +33,32 @@ public class Spawner extends GameObject implements Tickable {
 	@Override
 	public void Update() {
 		// TODO Auto-generated method stub
-		//tickcount
+		// tickcount
+		if (cancount) {
+			tickCount++;
+		}
 		if (tickCount == spawntime) {
 			canSpawn = true;
+			cancount = false;
 			tickCount = 0;
 		}
 		if (enemys == 0) {
+			cancount = true;
 			if (spawned) {
 				spawned = false;
 				wave++;
-				Game.text = new Text(FontStyle.getFont(100, 1), "Wave " + wave, Game.W / 2, Game.H / 2);
-
+				Game.handlergame.setMenu(Game.handlergame.screen);
+				enemyAtRound+=5;
 			}
 		}
 		if (canSpawn) {
 
 			spawn();
 		}
-
+		if (Game.handlergame.getMenu() != null) {
+			tickCount = 0;
+			cancount = false;
+		}
 	}
 
 	private void spawn() {
@@ -58,21 +66,27 @@ public class Spawner extends GameObject implements Tickable {
 		for (int i = 0; i < enemyAtRound; i++) {
 			int xp = (new Random().nextInt(10) + new Random().nextInt(6)) * 32;
 			int yp = (new Random().nextInt(8) + new Random().nextInt(8)) * 32;
-			if (getBounds().getX() + xp < getBounds().getX() + getBounds().getWidth()) {
-				Game.handler.object
-						.add(new Enemy((int) getBounds().getX() + xp, (int) getBounds().getY() + yp, ID.Enemy));
-				enemys++;
-			} else {
-				xp = (new Random().nextInt(5) * 32);
-				Game.handler.object
-						.add(new Enemy((int) getBounds().getX() + xp, (int) getBounds().getY() + yp, ID.Enemy));
-				enemys++;
+			if (enemys < enemyAtRound) {
+				if (getBounds().getX() + xp < getBounds().getX() + getBounds().getWidth()) {
+					Game.handler.object
+							.add(new Enemy((int) getBounds().getX() + xp, (int) getBounds().getY() + yp, ID.Enemy));
+					enemys++;
+				} else {
+					xp = (new Random().nextInt(5) * 32);
+					Game.handler.object
+							.add(new Enemy((int) getBounds().getX() + xp, (int) getBounds().getY() + yp, ID.Enemy));
+					enemys++;
+				}
 			}
 			canSpawn = false;
 		}
 		spawned = true;
 	}
+
 	public static int getEnemyAtRound() {
 		return enemys;
+	}
+	public static int getWave() {
+		return wave;
 	}
 }

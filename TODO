@@ -8,7 +8,7 @@ Arrumar o depth, quando o player anda tambme muda o depth do inimigo
 
 Algoritimo pra modificar as cores do pixel de uma imagem
 
-
+//As particulas
 
 
 public class FontX {

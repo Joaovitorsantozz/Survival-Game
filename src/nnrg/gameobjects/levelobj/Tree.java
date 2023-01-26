@@ -1,5 +1,6 @@
 package nnrg.gameobjects.levelobj;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -22,7 +23,8 @@ public class Tree extends GameObject implements Renderable, Tickable {
 		setWidth(spr.getWidth()*3);
 		setHeight(spr.getHeight()*3);
 		setDepth(Depth.HIGHT);
-		
+		verifyDepth();
+		verifyAmount();
 	}
 
 	@Override
@@ -30,27 +32,34 @@ public class Tree extends GameObject implements Renderable, Tickable {
 		// TODO Auto-generated method stub
 		
 		drawDefaultTex(g, spr);
-		
+		Graphics2D g2=(Graphics2D)g;
+		g.setColor(Color.red);
+	
 	}
 
 	@Override
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
-		return new Rectangle(getX()+getWidth()/2-10, getY()+getHeight()-35,20,10);
+		return new Rectangle(getX()+getWidth()/2-30, getY()+getHeight()/2+30,60,60);
 	}
 
 	@Override
 	public void Update() {
 		// TODO Auto-generated method stub
-		verifyDepth();
 		
+ 
+
 	}
 
 	void verifyAmount() {
 		for (int i = 0; i < Game.handler.object.size(); i++) {
 			GameObject ee = Game.handler.object.get(i);
 			if (ee.getId() == ID.Tree) {
+				if(ee==this) {
+					break;
+				}
 				if (ee.getBounds().intersects(getBounds())) {
+					System.out.println("deletei");
 					Game.handler.object.remove(ee);
 				}
 			}

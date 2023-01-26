@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import nnrg.gameobjects.GameObject;
 import nnrg.gameobjects.ID;
 import nnrg.gameobjects.Spawner;
-import nnrg.gameobjects.particles.Damageparticle;
 import nnrg.interfaces.Living;
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
@@ -32,8 +32,8 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 		super(x, y, id);
 		// TODO Auto-generated constructor stub
 		this.life = 20;
-		setWidth(22 * 3);
-		setHeight(24 * 3);
+		setWidth(18 * 3);
+		setHeight(20 * 3);
 		setDepth(Depth.MEDIUM);
 		an = new Animator(30, 5);
 		an2 = new Animator(10, 8);
@@ -48,7 +48,7 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 	public void Update() {
 		// TODO Auto-generated method stub
 
-	//	move();
+		move();
 
 		cooldown();
 		animdeath();
@@ -57,7 +57,7 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 
 	private void animdeath() {
 		if (this.life <= 0) {
-			
+			Game.handlergame.cam.makeShake();
 			isDeading = true;
 			an2.setAnimation(deading);
 		}
@@ -89,39 +89,25 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 		for (int i = 0; i < Game.handler.object.size(); i++) {
 			GameObject ee = Game.handler.object.get(i);
 			if (ee.getId() == ID.Player) {
-
-				if (!isColliding(getX() - 2, getY())) {
+				if (!isColliding(getX() - 1, getY())) {
 					if (getX() > ee.getX())
 						x -= 1;
 				}
-				if (!isColliding(getX() + 2, getY())) {
+				if (!isColliding(getX() + 1, getY())) {
 					if (getX() < ee.getX())
 						x += 1;
 				}
-				if (!isColliding(getX(), getY() + 2)) {
+				if (!isColliding(getX(), getY() + 1)) {
 					if (getY() < ee.getY())
 						y += 1;
 				}
-				if (!isColliding(getX(), getY() - 2)) {
+				if (!isColliding(getX(), getY() - 1)) {
 					if (getY() > ee.getY())
 						y -= 1;
 				}
-			}
-		}
-	}
 
-	private boolean colliding() {
-		for (int i = 0; i < Game.handler.object.size(); i++) {
-			GameObject ee = Game.handler.object.get(i);
-			if (ee.getId() == ID.Enemy) {
-				if (ee != this) {
-					if (getBounds().intersects(((Enemy) ee).getBounds())) {
-						return true;
-					}
-				}
 			}
 		}
-		return false;
 	}
 
 	private boolean isColliding(int xnext, int ynext) {
@@ -150,7 +136,7 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 		g.setColor(Color.red);
 
 		an.setAnimation(idle);
-		an.setMaxFrames(30);
+		an.setMaxFrames(20);
 
 		if (!isDeading) {
 			if (!attacked)
@@ -164,15 +150,14 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 
 		if (!isDeading)
 			bar.render(g);
-		
-		
+
 		
 	}
 
 	@Override
 	public Rectangle getBounds() {
 		// TODO Auto-generated method stub
-		return new Rectangle(getX() + getWidth() / 2 - 5, getY() + 20, 10, getHeight() - 20);
+		return new Rectangle(getX() + getWidth() / 2 - 5, getY() + 50, 15, 10);
 	}
 
 	public Rectangle getRealBounds() {

@@ -8,21 +8,24 @@ import java.util.List;
 import nnrg.gameobject.entitys.Player;
 import nnrg.interfaces.Renderable;
 import nnrg.interfaces.Tickable;
+import nnrg.main.Game;
+import nnrg.main.HandlerGame;
+import nnrg.world.Tile;
 
 public class GameObjectHandler {
 	public List<GameObject> object = new ArrayList<>();
 
 	private boolean right = false, left = false, up = false, down = false, attack = false;
 	public Player player;
-	
-		public void update() {
-		for (int i = 0, n =object.size(); i < n; i++) {
+	Tile[] tile;
+
+	public void update() {
+		for (int i = 0; i < object.size(); i++) {
 			GameObject ee = object.get(i);
 			if (ee instanceof Tickable) {
 				((Tickable) ee).Update();
 			}
-			
-			
+
 		}
 
 		object.sort(GameObject.nodeSorter);
@@ -30,29 +33,25 @@ public class GameObjectHandler {
 	}
 
 	public void render(Graphics2D g) {
-		for (int i = 0, n =object.size(); i < n; i++) {
+		int xstart = (int) Game.handlergame.cam.getX() >> 4; 
+		int ystart = (int) Game.handlergame.cam.getY() >> 4;
+
+		int xfinal = xstart + Game.W >> 4;
+		int yfinal = ystart + Game.H >> 4;
+	
+		for (int i = 0, n = object.size(); i < n; i++) {
 			GameObject ee = object.get(i);
 			if (ee instanceof Renderable) {
+
 				((Renderable) ee).render(g);
+
 			}
 		}
-
+	
 	}
 
 	public void renderNotAffect(Graphics g) {
 
-	}
-
-	public void resetKeys() {
-		for (int i = 0, n =object.size(); i < n; i++) {
-			GameObject ee = object.get(i);
-			if (ee.getId() == ID.Player) {
-				setUp(false);
-				setDown(false);
-				setRight(false);
-				setLeft(false);
-			}
-		}
 	}
 
 	public void ClearObjects() {
@@ -70,7 +69,7 @@ public class GameObjectHandler {
 	}
 
 	public void DeleteByTag(ID id) {
-		for (int i = 0, n =object.size(); i < n; i++) {
+		for (int i = 0, n = object.size(); i < n; i++) {
 			if (object.get(i).getId() == id)
 				object.remove(object.get(i));
 		}

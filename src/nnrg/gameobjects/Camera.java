@@ -5,13 +5,14 @@ import nnrg.main.HandlerGame;
 
 public class Camera {
 	private float x, y;
-
-	public Camera(int x, int y) {
+	private GameObject obj;
+	public Camera(int x, int y,GameObject obj) {
 		this.x = x;
 		this.y = y;
+		this.obj=obj;
 	}
-
-	public void tick(GameObject obj) {
+	
+	public void tick() {
 
 		x += ((obj.getX() - x) - Game.W / 2f) * 0.03f;
 		y += ((obj.getY() - y) - Game.H / 2f) * 0.03f;
@@ -27,7 +28,10 @@ public class Camera {
 
 		
 	}
-
+	public void makeShake() {
+		x += ((obj.getX() - x) - Game.W / 2f) * 0.4f;
+		y += ((obj.getY() - y) - Game.H / 2f) * 0.4f;
+	}
 	public float getX() {
 		return x;
 	}
