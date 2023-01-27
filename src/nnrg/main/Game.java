@@ -71,8 +71,6 @@ public class Game extends Canvas implements Runnable {
 		int ticks = 0;
 		long lastTimer1 = System.currentTimeMillis();
 
-		
-
 		while (isRunning) {
 			long now = System.nanoTime();
 			unprocessed += (now - lastTime) / nsPerTick;
@@ -85,8 +83,6 @@ public class Game extends Canvas implements Runnable {
 				shouldRender = true;
 			}
 
-		
-
 			if (shouldRender) {
 				frames++;
 				render();
@@ -94,12 +90,13 @@ public class Game extends Canvas implements Runnable {
 
 			if (System.currentTimeMillis() - lastTimer1 > 1000) {
 				lastTimer1 += 1000;
-				fps=frames;
+				fps = frames;
 				frames = 0;
 				ticks = 0;
 			}
 		}
 	}
+
 	private void start() {
 		isRunning = true;
 		new Thread(this).start();
@@ -111,12 +108,13 @@ public class Game extends Canvas implements Runnable {
 		if (!hasFocus()) {
 			inpt.releaseAll();
 		} else {
+
 			if (handlergame.getMenu() == null) {
-				handler.update();
 				UpdateCam();
 				clock.Update();
 				text.tick();
 				inpt.tick();
+				handler.update();
 			} else {
 				handlergame.getMenu().tick();
 			}

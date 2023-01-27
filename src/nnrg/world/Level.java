@@ -1,6 +1,5 @@
 package nnrg.world;
 
-import java.awt.Color;
 import java.util.Random;
 
 import nnrg.gameobject.entitys.Player;

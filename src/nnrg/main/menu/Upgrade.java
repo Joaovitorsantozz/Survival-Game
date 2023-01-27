@@ -2,9 +2,9 @@ package nnrg.main.menu;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Field;
 
 import nnrg.main.HandlerGame;
+import nnrg.main.LoadImage;
 import nnrg.main.others.FontX;
 
 public class Upgrade {
@@ -13,14 +13,15 @@ public class Upgrade {
 	private String description;
 	private String description2[] = new String[2];
 	private FontX font;
-
+	private BufferedImage streength=new LoadImage("/upg/sword.png").getImage(),
+			agility=new LoadImage("/upg/agility.png").getImage(),
+			stamina=new LoadImage("/upg/stamina.png").getImage();
 	private int Id;
 
-	public Upgrade(BufferedImage sprite, String description, int ID) {
-		this.spr = sprite;
-		this.description = description;
+	public Upgrade(int ID) {
 		font = new FontX();
 		this.Id = ID;
+		setValue();
 	}
 
 	public void setValue() {
@@ -28,14 +29,20 @@ public class Upgrade {
 
 		case 1:
 			HandlerGame.level.getPlayer().damage += 2;
+			setDescription("Improve your streength stats by 5");
+			setSpr(streength);
 			break;
 
 		case 2:
 			HandlerGame.level.getPlayer().speed += 1;
+			setDescription("Improve your agility stats by 05");
+			setSpr(agility);
 			break;
 
 		case 3:
 			HandlerGame.level.getPlayer().maxStam+=10;
+			setDescription("Improve your stamina stats by 5");
+			setSpr(stamina);
 			break;
 
 		}
@@ -78,4 +85,21 @@ public class Upgrade {
 	public String getdes() {
 		return this.description;
 	}
+
+	public BufferedImage getSpr() {
+		return spr;
+	}
+
+	public void setSpr(BufferedImage spr) {
+		this.spr = spr;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

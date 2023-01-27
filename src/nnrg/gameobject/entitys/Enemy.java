@@ -149,7 +149,7 @@ public class Enemy extends GameObject implements Renderable, Tickable, Living {
 		}
 
 		if (!isDeading)
-			bar.render(g);
+			bar.render(g,0,-10);
 
 		
 	}

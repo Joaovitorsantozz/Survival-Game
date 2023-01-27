@@ -15,6 +15,7 @@ import nnrg.interfaces.Tickable;
 import nnrg.main.Game;
 import nnrg.main.InputHandler;
 import nnrg.main.LoadImage;
+import nnrg.main.UI.Lifebar;
 import nnrg.main.others.Animator;
 import nnrg.world.Depth;
 
@@ -30,16 +31,20 @@ public class Player extends GameObject implements Tickable, Renderable {
 	public InputHandler input;
 	public boolean rechargeStam, refillstam;
 	public int stamina = 80, maxStam = 80, count;
-	public int damage=2;
+	public int damage = 2;
 	public BufferedImage stamin = new LoadImage("/upg/raio.png").getImage(),
 			emptystam = new LoadImage("/upg/emptyraio.png").getImage();
+
+	private Lifebar bar;
 
 	public Player(int x, int y, ID id, GameObjectHandler hand, InputHandler input) {
 		super(x, y, id);
 		// TODO Auto-generated constructor stub
 		this.hand = hand;
+		this.life = 50;
+		this.maxlife = 50;
 		setDepth(Depth.HIGHT + 5);
-		setWidth(16 * 3); 
+		setWidth(16 * 3);
 		setHeight(16 * 3);
 		an = new Animator(20, 8);
 		atck = new Animator(0, 8);
@@ -50,6 +55,8 @@ public class Player extends GameObject implements Tickable, Renderable {
 		atck.setMaxFrames(10);
 		this.input = input;
 
+		bar = new Lifebar(this, life, maxlife);
+
 	}
 
 	@Override
@@ -58,6 +65,7 @@ public class Player extends GameObject implements Tickable, Renderable {
 		// create a move method
 		setVelX(0);
 		setVelY(0);
+
 		if (input.up.down)
 			velY = -speed;
 		if (input.down.down)
@@ -70,7 +78,9 @@ public class Player extends GameObject implements Tickable, Renderable {
 		x += velX;
 		y += velY;
 
-		if (input.attack.down) {
+		if (input.attack.down)
+
+		{
 			if (stamina > 0) {
 				stamina -= 10;
 				input.attack.down = false;
@@ -90,8 +100,11 @@ public class Player extends GameObject implements Tickable, Renderable {
 		}
 
 		refillStam();
+
 		Col();
+
 		setDir();
+
 	}
 
 	private void refillStam() {
@@ -108,14 +121,13 @@ public class Player extends GameObject implements Tickable, Renderable {
 			if (new Random().nextInt(100) < 30) {
 				if (velX < 0) {
 					dir = -1;
-					Game.handler.add(new WalkParticle(getX()+10, getY() + getHeight() - 10, ID.Particle));
+					Game.handler.add(new WalkParticle(getX() + 10, getY() + getHeight() - 10, ID.Particle));
 				}
 				if (velX > 0) {
 					dir = 1;
-					Game.handler.add(new WalkParticle(getX()-20, getY() + getHeight() - 10, ID.Particle));
+					Game.handler.add(new WalkParticle(getX() - 20, getY() + getHeight() - 10, ID.Particle));
 				}
 
-			
 			}
 
 		}
@@ -163,17 +175,17 @@ public class Player extends GameObject implements Tickable, Renderable {
 
 		drawAttack(g);
 		renderpUI(g);
-
+		bar.render(g2, -13, 50);
 	}
 
 	public void renderpUI(Graphics g) {
 		for (int i = 0; i < maxStam / 10; i++) {
 
-			g.drawImage(emptystam, (x - 20) + i * 10, (getY() - 20), 10, 15, null);
+			g.drawImage(emptystam, (x - 17) + i * 10, (getY() - 20), 10, 15, null);
 		}
 		for (int i = 0; i < stamina / 10; i++) {
 
-			g.drawImage(stamin, (x - 20) + i * 10, (getY() - 20), 10, 15, null);
+			g.drawImage(stamin, (x - 17) + i * 10, (getY() - 20), 10, 15, null);
 		}
 
 	}

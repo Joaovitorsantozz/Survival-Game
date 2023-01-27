@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
 
-import nnrg.gameobject.entitys.Enemy;
 import nnrg.gameobjects.particles.Damageparticle;
 import nnrg.main.Game;
 
@@ -57,7 +59,34 @@ public abstract class GameObject {
 			damaged.attacked = true;
 		}
 	}
+	public static BufferedImage rotateImage(BufferedImage rotateImage, double angle) {
+	    AffineTransform tx = new AffineTransform();
+	    tx.rotate(Math.toRadians(angle), rotateImage.getWidth() / 2.0, rotateImage.getHeight() / 2.0);
+
+	 
+	    Point2D[] aCorners = new Point2D[4];
+	    aCorners[0] = tx.transform(new Point2D.Double(0.0, 0.0), null);
+	    aCorners[1] = tx.transform(new Point2D.Double(rotateImage.getWidth(), 0.0), null);
+	    aCorners[2] = tx.transform(new Point2D.Double(0.0, rotateImage.getHeight()), null);
+	    aCorners[3] = tx.transform(new Point2D.Double(rotateImage.getWidth(), rotateImage.getHeight()), null);
+
 	
+	    double dTransX = 0;
+	    double dTransY = 0;
+	    for(int i = 0; i < 4; i++) {
+	        if(aCorners[i].getX() < 0 && aCorners[i].getX() < dTransX)
+	            dTransX = aCorners[i].getX();
+	        if(aCorners[i].getY() < 0 && aCorners[i].getY() < dTransY)
+	            dTransY = aCorners[i].getY();
+	    }
+
+	 
+	    AffineTransform translationTransform = new AffineTransform();
+	    translationTransform.translate(-dTransX, -dTransY);
+	    tx.preConcatenate(translationTransform);
+
+	    return new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR).filter(rotateImage, null);
+	}
 	public void tick() {
 		
 	}

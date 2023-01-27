@@ -15,9 +15,10 @@ import nnrg.world.Tile;
 public class GameObjectHandler {
 	public List<GameObject> object = new ArrayList<>();
 
+
 	private boolean right = false, left = false, up = false, down = false, attack = false;
 	public Player player;
-	Tile[] tile;
+	
 
 	public void update() {
 		for (int i = 0; i < object.size(); i++) {
@@ -31,7 +32,7 @@ public class GameObjectHandler {
 		object.sort(GameObject.nodeSorter);
 
 	}
-
+	
 	public void render(Graphics2D g) {
 		int xstart = (int) Game.handlergame.cam.getX() >> 4; 
 		int ystart = (int) Game.handlergame.cam.getY() >> 4;

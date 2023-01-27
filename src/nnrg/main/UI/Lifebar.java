@@ -14,20 +14,20 @@ public class Lifebar {
 
 	public Lifebar(GameObject ee, double life, double maxLife) {
 		user = ee;
-		this.life=20;
+		this.life=life;
 		this.maxlife = maxLife;
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g,int offX,int offY) {
 		if(getLife()!=user.getLife()) {
 			life-=0.5;
 		}
 		int mw = (int) ((life / maxlife) * 70);
 		g.setColor(new Color(175, 0, 52));
-		g.fillRect(user.getX(), user.getY() - 10, 70, 12);
+		g.fillRect(user.getX()+offX, user.getY() + offY, 70, 12);
 		g.setColor(new Color(52, 175, 0));
-		g.fillRect(user.getX(), user.getY() - 10, mw, 12);
-		g.drawImage(lifebar, user.getX(), user.getY() - 10, 70, 12, null);
+		g.fillRect(user.getX()+offX, user.getY() + offY, mw, 12);
+		g.drawImage(lifebar, user.getX()+offX, user.getY() + offY, 70, 12, null);
 
 	}
 

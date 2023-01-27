@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import nnrg.gameobjects.Spawner;
 import nnrg.main.Game;
@@ -14,23 +15,31 @@ import nnrg.main.others.FontX;
 import nnrg.main.others.Text;
 
 public class Upgradescreen extends Menu {
+
 	private BufferedImage opt = new LoadImage("/upg/upgscreen.png").getImage(),
-			triangle = new LoadImage("/upg/selected.png").getImage();
+			triangle = new LoadImage("/upg/selected.png").getImage(),
+			ballon = new LoadImage("/menu/ballon.png").getImage();
+
 	private FontX font;
 
 	private InputHandler input;
 	public int selected = 0;
 	private float rotation, y;
 	private boolean incR = true, decR;
-	public Upgrade[] upgrade = {
-			new Upgrade(new LoadImage("/upg/sword.png").getImage(), "Improve your streength stats by 1",1),
-			new Upgrade(new LoadImage("/upg/agility.png").getImage(), "Improve your agility stats by 05",2),
-			new Upgrade(new LoadImage("/upg/stamina.png").getImage(), "Improve your stamina stats by 5",3), };
+	public Upgrade[] upgrade = new Upgrade[3];
+
+	public Random rand = new Random();
+	private int upt;
 
 	public Upgradescreen(InputHandler input) {
 		font = new FontX();
 		this.input = input;
+		
+		upt=rand.nextInt(3);
 
+		upgrade[0]=new Upgrade(2);
+		upgrade[1]=new Upgrade(3);
+		upgrade[2]=new Upgrade(1);
 	}
 
 	public void tick() {
@@ -48,6 +57,7 @@ public class Upgradescreen extends Menu {
 			selected--;
 			if (selected < 0)
 				selected = 2;
+
 		}
 		if (input.menu.down) {
 			upgrade[selected].setValue();
@@ -73,8 +83,6 @@ public class Upgradescreen extends Menu {
 			}
 		}
 
-		System.out.println(decR);
-		System.out.println(rotation);
 	}
 
 	public void render(Graphics g) {
@@ -99,6 +107,8 @@ public class Upgradescreen extends Menu {
 		}
 
 		// System.out.printf("lenght "+teste2.length()+"\n");
+
+		g.fillRect(100, 300, 30, 30);
 
 	}
 
